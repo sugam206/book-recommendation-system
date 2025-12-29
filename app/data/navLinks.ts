@@ -1,0 +1,12 @@
+export type NavLink = {
+    label: string
+    href?: string | null
+}
+
+export const links: NavLink[] = [
+    { label: 'Home', href: '/' },
+    { label: 'Browse', href: null },
+    { label: 'My Book', href: '/my-book' },
+    { label: 'Rent', href: '/rent' },
+    { label: 'Profile', href: '/profile' },
+]

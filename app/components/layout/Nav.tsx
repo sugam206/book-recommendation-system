@@ -2,21 +2,41 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { browseOptions } from "../../data/browseOptions";
 import { links } from "@/app/data/navLinks";
 
 const Topbar = () => {
-
-
-    // browseOptions imported from app/data/browseOptions.ts
-
     const [query, setQuery] = useState("");
     const [isBrowseOpen, setIsBrowseOpen] = useState(false);
     const pathname = usePathname() || "/";
 
+    const [visible, setVisible] = useState(true);
+    const [atTop, setAtTop] = useState(true);
+    const lastScrollY = useRef(0);
+
+    useEffect(() => {
+        const navController = () => {
+            const currentScrollY = window.scrollY
+            setAtTop(currentScrollY < 10)
+            if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+                setVisible(false);
+            } else {
+                setVisible(true)
+            }
+            lastScrollY.current = currentScrollY
+        }
+        window.addEventListener('scroll', navController, { passive: true })
+        return () => {
+            window.removeEventListener('scroll', navController)
+        }
+    }, [])
+    const navbarClasses = `w-full border-b fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${atTop
+        ? "bg-[#402218] border-[#D7B59D]"
+        : "bg-transparent backdrop-blur-md border-gray-200 shadow-sm"
+        } ${visible ? "translate-y-0" : "-translate-y-full"}`;
     return (
-        <header className="w-full bg-[#402218] backdrop-blur-sm border-b">
+        <header className={navbarClasses} >
             <div className="max-w-6xl mx-auto flex items-center justify-between gap-4 p-4">
                 <div className="flex items-center gap-4">
                     <Link href="/" className="text-xl font-semibold text-[#D7B19D]">

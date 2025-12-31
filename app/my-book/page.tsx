@@ -75,7 +75,7 @@ const Page = () => {
     const next = () => goToPage(currentPage + 1)
 
     return (
-        <div className=' flex overflow-hidden min-h-screen py-6 justify-center'>
+        <div className=' flex overflow-hidden min-h-screen mt-11 py-6 justify-center'>
             <div className=" shadow rounded-lg  ">
                 <header className="flex items-center justify-between mb-6">
                     <h1 className="text-2xl font-semibold text-gray-800">My Books</h1>
